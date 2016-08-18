@@ -1,4 +1,4 @@
-gym_ple
+gym-ple
 ******
 
 PyGame Learning Environment (PLE) is a learning environment, mimicking the Arcade Learning Environment interface, allowing a quick start to Reinforcement Learning in Python. 
@@ -38,7 +38,7 @@ And finally clone and install this package
 .. code:: shell
 
     git clone https://github.com/lusob/gym-ple.git 
-    cd gym_ple/
+    cd gym-ple/
     pip install -e .
 
 Example
