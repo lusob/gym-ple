@@ -37,12 +37,12 @@ And finally clone and install this package
 
 .. code:: shell
 
-    git clone https://github.com/lusob/gym_ple.git 
+    git clone https://github.com/lusob/gym-ple.git 
     cd gym_ple/
     pip install -e .
 
 Example
 =======
 
-Run the ``example.py`` file to play a PLE game (flappybird) with a random_agent (you need to have installed openai gym).
+Run ``python example.py`` file to play a PLE game (flappybird) with a random_agent (you need to have installed openai gym).
 
