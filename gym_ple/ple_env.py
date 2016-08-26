@@ -5,7 +5,7 @@ from ple import PLE
 class PLEEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
-    def __init__(self, game_name='FlappyBird', obs_type='ram', display_screen=True):
+    def __init__(self, game_name='FlappyBird', display_screen=True):
         # open up a game state to communicate with emulator
         import importlib
         game_module_name = ('ple.games.%s' % game_name).lower()
