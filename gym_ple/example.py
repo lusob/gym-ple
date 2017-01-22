@@ -32,6 +32,7 @@ if __name__ == '__main__':
     # This declaration must go *after* the monitor call, since the
     # monitor's seeding creates a new action_space instance with the
     # appropriate pseudorandom number generator.
+    env.seed(0)
     agent = RandomAgent(env.action_space)
 
     episode_count = 100
