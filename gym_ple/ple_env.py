@@ -57,3 +57,10 @@ class PLEEnv(gym.Env):
                 self.viewer = rendering.SimpleImageViewer()
             self.viewer.imshow(img)
 
+
+    def _seed(self, seed):
+        rng = np.random.RandomState(seed)
+        self.game_state.rng = rng
+        self.game_state.game.rng = self.game_state.rng
+
+        self.game_state.init()
