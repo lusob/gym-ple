@@ -1,3 +1,4 @@
+import os
 import gym
 from gym import spaces
 from ple import PLE
@@ -7,6 +8,9 @@ class PLEEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
     def __init__(self, game_name='FlappyBird', display_screen=True):
+        # set headless mode
+        os.environ['SDL_VIDEODRIVER'] = 'dummy'
+        
         # open up a game state to communicate with emulator
         import importlib
         game_module_name = ('ple.games.%s' % game_name).lower()
