@@ -21,7 +21,7 @@ class PLEEnv(gym.Env):
         self._action_set = self.game_state.getActionSet()
         self.action_space = spaces.Discrete(len(self._action_set))
         self.screen_height, self.screen_width = self.game_state.getScreenDims()
-        self.observation_space = spaces.Box(low=0, high=255, shape=(self.screen_width, self.screen_height, 3))
+        self.observation_space = spaces.Box(low=0, high=255, shape=(self.screen_width, self.screen_height, 3), dtype=np.uint8)
         self.viewer = None
 
 
@@ -34,6 +34,7 @@ class PLEEnv(gym.Env):
     def _get_image(self):
         image_rotated = np.fliplr(np.rot90(self.game_state.getScreenRGB(),3)) # Hack to fix the rotated image returned by ple
         return image_rotated
+        # return self.game_state.getScreenRGB()
 
     @property
     def _n_actions(self):
@@ -41,7 +42,7 @@ class PLEEnv(gym.Env):
 
     # return: (states, observations)
     def _reset(self):
-        self.observation_space = spaces.Box(low=0, high=255, shape=(self.screen_width, self.screen_height, 3))
+        self.observation_space = spaces.Box(low=0, high=255, shape=(self.screen_width, self.screen_height, 3), dtype=np.uint8)
         self.game_state.reset_game()
         state = self._get_image()
         return state
