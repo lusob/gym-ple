@@ -4,6 +4,12 @@ from gym import spaces
 from ple import PLE
 import numpy as np
 
+try:
+    import pyglet
+except ImportError as e:
+    reraise(
+        suffix="HINT: you can install pyglet directly via 'pip install pyglet'. But if you really just want to install all Gym dependencies and not have to think about it, 'pip install -e .[all]' or 'pip install gym[all]' will do it.")
+
 class PLEEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
@@ -57,9 +63,8 @@ class PLEEnv(gym.Env):
         if mode == 'rgb_array':
             return img
         elif mode == 'human':
-            from gym.envs.classic_control import rendering
             if self.viewer is None:
-                self.viewer = rendering.SimpleImageViewer()
+                self.viewer = SimpleImageViewer()
             self.viewer.imshow(img)
 
 
@@ -69,3 +74,46 @@ class PLEEnv(gym.Env):
         self.game_state.game.rng = self.game_state.rng
 
         self.game_state.init()
+
+
+class SimpleImageViewer(object):
+    def __init__(self, display=None):
+        self.window = None
+        self.isopen = False
+        self.display = display
+
+    def imshow(self, arr):
+        if self.window is None:
+            height, width, _channels = arr.shape
+            self.window = pyglet.window.Window(
+                width=width, height=height, display=self.display, vsync=False, resizable=True)
+            self.width = width
+            self.height = height
+            self.isopen = True
+
+            @self.window.event
+            def on_resize(width, height):
+                self.width = width
+                self.height = height
+
+            @self.window.event
+            def on_close():
+                self.isopen = False
+
+        assert len(
+            arr.shape) == 3, "You passed in an image with the wrong number shape"
+        image = pyglet.image.ImageData(
+            arr.shape[1], arr.shape[0], 'RGB', arr.tobytes(), pitch=arr.shape[1]*-3)
+        self.window.clear()
+        self.window.switch_to()
+        self.window.dispatch_events()
+        image.blit(0, 0, width=self.window.width, height=self.window.height)
+        self.window.flip()
+
+    def close(self):
+        if self.isopen:
+            self.window.close()
+            self.isopen = False
+
+    def __del__(self):
+        self.close()
