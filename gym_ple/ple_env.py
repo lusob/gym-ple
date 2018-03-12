@@ -31,7 +31,7 @@ class PLEEnv(gym.Env):
         self.viewer = None
 
 
-    def _step(self, a):
+    def step(self, a):
         reward = self.game_state.act(self._action_set[a])
         state = self._get_image()
         terminal = self.game_state.game_over()
@@ -47,18 +47,13 @@ class PLEEnv(gym.Env):
         return len(self._action_set)
 
     # return: (states, observations)
-    def _reset(self):
+    def reset(self):
         self.observation_space = spaces.Box(low=0, high=255, shape=(self.screen_width, self.screen_height, 3), dtype=np.uint8)
         self.game_state.reset_game()
         state = self._get_image()
         return state
 
-    def _render(self, mode='human', close=False):
-        if close:
-            if self.viewer is not None:
-                self.viewer.close()
-                self.viewer = None
-            return
+    def render(self, mode='human'):
         img = self._get_image()
         if mode == 'rgb_array':
             return img
@@ -67,8 +62,12 @@ class PLEEnv(gym.Env):
                 self.viewer = SimpleImageViewer()
             self.viewer.imshow(img)
 
+    def close(self):
+        if self.viewer is not None:
+            self.viewer.close()
+            self.viewer = None
 
-    def _seed(self, seed):
+    def seed(self, seed):
         rng = np.random.RandomState(seed)
         self.game_state.rng = rng
         self.game_state.game.rng = self.game_state.rng
