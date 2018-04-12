@@ -57,4 +57,5 @@ if __name__ == '__main__':
     # Upload to the scoreboard. We could also do this from another
     # process if we wanted.
     logger.info("Successfully ran RandomAgent. Now trying to upload results to the scoreboard. If it breaks, you can always just try re-uploading the same results.")
-    gym.upload(outdir)
+#    gym.upload(outdir)
+    # Syntax for uploading has changed
