@@ -23,7 +23,7 @@ On OSX:
 .. code:: shell
 
     brew install sdl sdl_ttf sdl_image sdl_mixer portmidi  # brew or use equivalent means
-    conda install -c https://conda.binstar.org/quasiben pygame  # using Anaconda
+    conda install -c tlatorre pygame=1.9.2 # using Anaconda
 
 On Ubuntu 14.04:
 
