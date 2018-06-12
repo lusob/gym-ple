@@ -41,6 +41,13 @@ And finally clone and install this package
     cd gym-ple/
     pip install -e .
 
+You also can install it from PyPi:
+
+.. code:: shell
+
+    pip install gym_ple 
+
+
 Example
 =======
 
