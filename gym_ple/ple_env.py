@@ -7,13 +7,16 @@ import numpy as np
 class PLEEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
-    def __init__(self, game_name='FlappyBird', display_screen=True):
+    def __init__(self, game_name='FlappyBird', display_screen=True, ple_game=True):
         # set headless mode
         os.environ['SDL_VIDEODRIVER'] = 'dummy'
         
         # open up a game state to communicate with emulator
         import importlib
-        game_module_name = ('ple.games.%s' % game_name).lower()
+        if ple_game:
+            game_module_name = ('ple.games.%s' % game_name).lower()
+        else:
+            game_module_name = game_name.lower()
         game_module = importlib.import_module(game_module_name)
         game = getattr(game_module, game_name)()
         self.game_state = PLE(game, fps=30, display_screen=display_screen)
