@@ -7,7 +7,7 @@ for game in ['Catcher', 'MonsterKong', 'FlappyBird', 'PixelCopter', 'PuckWorld',
     register(
         id='{}-v0'.format(game),
         entry_point='gym_ple:PLEEnv',
+        max_episode_steps=10000,
         kwargs={'game_name': game, 'display_screen':False},
-        tags={'wrapper_config.TimeLimit.max_episode_steps': 10000},
         nondeterministic=nondeterministic,
     )
