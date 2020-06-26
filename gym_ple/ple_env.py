@@ -70,4 +70,7 @@ class PLEEnv(gym.Env):
         self.game_state.rng = rng
         self.game_state.game.rng = self.game_state.rng
 
-        self.game_state.init()
+    def close(self):
+        if self.viewer is not None:
+            self.viewer.close()
+            self.viewer = None
